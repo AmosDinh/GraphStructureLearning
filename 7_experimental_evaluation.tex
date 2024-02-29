@@ -1,0 +1,23 @@
+\chapter{Conclusion}
+In the present work, the performance of a GNN-based recommender system is compared against a traditional factorization based approach.  For this purpose a heterogeneous Knowledge Graph is constructed which combines the working and learning contexts of employees and learning content. It is shown that the graph based approach can outperform the factorization based system in the task of recommending learning content. The GNN is able to learn appropriate aggregation functions, without the need of manual feature engineering. The aggregation depends on the neighborhood context of nodes and enables the creation informative user and learning content embeddings. 
+
+A two-hop deep HGT \parencite{hu2020heterogeneous}, compared to a deeper HGT, is shown to exhibit sufficient performance for the task. It is further demonstrated that the consideration of additional features such as the text embeddings increases the performance of the baseline models. This highlights the effectiveness of the GNN-based approach, as it allows for the effortless inclusion of features from different sources into the graph which can then automatically be aggregated by the GNN.
+
+The present work has only investigated the GNNs performance in an experimental setting. Further challenges have to be solved, such as how the graph can be hosted, while considering privacy concerns of different customers, while simultaneously addressing latency issues that arise with online inference or separated customer graphs. The experimental demonstration of the HGT on the general link prediction case has to be refined to create more informative node embeddings. It has to be investigated whether the embeddings of all entities obtained through this method provide concrete benefits to downstream tasks.
+
+Other concerns include how learned knowledge can be shared between customer systems and across model versions. One dimension is to ensure backwards compatibility of node embeddings\parencite{hu2022learning} used by downstream tasks when an improved version of the model is released, such that the downstream applications need no major modifications. 
+
+A major goal should further be to incorporate edge-based features, such as the cosine similarity between skills or the TF-IDF scores between skills and jobs. The authors who propose the HGT 
+ \parencite{hu2020heterogeneous} also consider time as a feature. This could help the model to stay relevant without immediate need for retraining. 
+ 
+ Ultimately, as outlined in the Preliminaries, the best recommender systems are hybrid, meaning they combine the knowledge from various sources to create recommendations. The GNN-based system could just present the first retrieval stage, in which user and item embeddings are precomputed and upon a query, a large subset is fetched, after which an extensive reranking follows.  Or it may be regarded as a hybrid system itself, since through the graph, multiple contexts such as the working context and skill context can be combined.
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+\chapter{Related Work}
+\label{ch:relatedwork}
+Following works bear similar characteristics to the present work, which is the problem of recommending learning content to users as well as the graph-based approach taken.
+
+\textcite{tarus2017hybrid} propose a hybrid recommender system which includes CF, a KG, as well as sequential pattern mining. The cold-start problem is addressed by utilizing knowledge about the learners through the KG. The authors can include detailed personal data such as learning style and knowledge level into the KG, different to the present work. They further construct two separate graphs, one for the learner and one for the learning resources. Instead of Graph Neural Networks, a hand-crafted approach is taken to compute the similarity between two learning objects.
+
+\textcite{wang2021personalized} establish two different learning frameworks. The second is most similar to the present work. To address the sparsity problem of the skill profiles of people, they construct two graphs. The first graph connects learners which have completed the same learning content, which allows to infer their skill profile through other learners. The second graph connects the learners to peers in their department. The hypothesis is that people in the same department might share similar competencies. They then combine the knowledge from both graphs using a self-modeled GNN similar to the GAT \parencite{velivckovic2017graph}. They extract competency topics from the skill profiles of learners using a variatonal autoencoder \parencite{kingma2013auto} and model the topic demand through historical records and changes in the topic proportions. Finally, they employ CF to generate recommendations. 
+
+Opposed to the two-graph approach in  \parencite{wang2021personalized}, the present work constructs a unified KG. Additionally to the entities and relationships in \parencite{wang2021personalized}, the present graph includes the learning content as well as the supervisors. The unified graph holds no direct skill-profiles of learners. Instead the skills are only connected to the learning content. The HGT is employed to deal with the resulting more complex relationships of entities in the graph. This unified approach of including all entities in the same graph reduces the complexity for maintenance and allows for more flexible experimentation.
+
+
+
+\newpage
+
+\begin{equation}
+\begin{aligned}
+\tilde{\alpha}(s, e, t) &= \left(K(s) \, \mathbf{W}^\text{ATT}_{\phi(e)} \, Q(t)^T\right) \cdot (...)  \\
+K(s) &= \mathbf{W}^{K}_{\tau(s)}h^{l-1}_s \\
+Q(t) &= \mathbf{W}^{Q}_{\tau(t)}h^{l-1}_t
+\label{eq:hgt}
+\end{aligned}
+\end{equation}
+
+The \textbf{Heterogeneous Graph Transformer} (HGT) introduced by \textcite{hu2020heterogeneous} builds upon the previous mentioned ideas for representation learning on heterogeneous graphs. 
+The essential difference to GAT is the use of three interaction matrices  $\mathbf{W}^{K}_{\tau(s)}, \, \mathbf{W}^\text{ATT}_{\phi(e)}$ and $ \, \mathbf{W}^{Q}_{\tau(t)}$  to model each component of  the meta relation $\langle \tau(s), \phi(e), \tau(t) \rangle$ \eqref{eq:hgt}. 
+
+%\frac{\mu_{\langle \tau(s), \phi(e), \tau(t) \rangle}}{\sqrt{d}}
+
+They argue that the way the GAT models the attention component $\tilde{\alpha}_{st}$ with the same matrix $\mathbf{W}$ for $h_s$ and $h_t$ in formula \eqref{eq:gat} is insufficient for heterogeneous graphs as both node types might posses different feature distributions. Instead, two matrices $\mathbf{W}^{K}$ and $\mathbf{W}^{Q}$ are learned. These matrices are learned per node type  $a \in \mathcal{A}$, which allows the reuse of those weights across different edge types $r \in \mathcal{R}$, potentially towards other node types. For edge types for which data is rare and  $\mathbf{W}^\text{ATT}_{\phi(e)}$ can not be learned well, an increase in performance can be achieved by this method. As the present work deals with a heterogeneous graph where some edge types are more rare than others, the HGT is chosen. 
+
+
+
+Additionally to the HGT,  \textcite{hu2020heterogeneous} propose a novel sampling method to sample the computational graph for target nodes contained in a single mini-batch. The method samples in a way such that for each node type an equal amount of nodes is present in the mini-batch. The probability of a node $s$ to be sampled depends on cummulated scores across the edge types  it is connected by to any target node $t$. 
+
+One sampling iteration for a set of target nodes and the source nodes to be sampled is examined in the following. For one node type $a_1 \in \mathcal{A}$ and one edge type $r_1 \in \mathcal{R}$, for node $s$, $\tau(s) = a_1$ the score to be sampled with respect to target node $t$, $\tau(t)=a_x$, is equal to $\frac{|E_s|}{|\mathcal{N}_{r_1}(t)|}$\, where $E_s = \{e | \psi(e) = (s,t) \land \phi(e) = r_1 \}$. Intuitively, this allows to keep the sampled sub-graph of the mini-batch dense, because those neighbors are more likely to be sampled, which maintain edges to multiple different target nodes. Information loss can be reduced, because the sampled edges are more representative of the local neighborhood around the target nodes in the mini-batch, useful for sampling on large scale graphs.  Furthermore, the computational load is reduced, since a smaller amount of distinct node representations have to be computed. This sampling method is chosen in the present work as well.
+
+The work learns the node embeddings  combining the HGT with \textbf{TransE} \parencite{bordes2013translating}. Details on the exact implementation are provided in the Methodology Chapter \ref{ch:methodology}. Specifically, a Knowledge Graph Embedding approach is chosen, as besides the user-item  recommendation task, further experiments are conducted to learn general node embeddings for all entity types. 
+
+
+\begin{equation}
+\begin{aligned}
+\mathcal{L} &= \sum_{(s,r,t)\in S} \sum_{(s',r,t') \in S'} [\gamma + d(h_s + h_r, h_t) - d(h_{s'} + h_r, h_{t'})]_{+}\\
+[a]_{+} &=  \begin{cases}
+    a,& \text{if } a\geq 0\\
+    0              & \text{otherwise}
+\end{cases}
+\end{aligned}
+\label{eq:pairwise}
+\end{equation}
+
+The embeddings of the relationships are learned using pairwise margin loss \parencite{pytorchloss} as proposed in the original paper \parencite{bordes2013translating} \eqref{eq:pairwise}.
+
+
+
+$\gamma$ is a scalar margin and $d$ is the Minkowski distance. $S'$ represents the set of tuples in which either the head or tail node is corrupted, such that the edge between the two nodes is not present in the actual data. For ease of implementation, the present paper only corrupts the tail node.

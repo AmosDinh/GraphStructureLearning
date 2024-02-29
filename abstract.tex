@@ -1,0 +1,14 @@
+% !TEX root =  master.tex
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}\noindent 
+Recommender systems provide personalized recommendations of items or content to users. In recent years, approaches to recommender systems which incorporate Graph Neural Networks (GNNs) have gained traction. These approaches allow the inclusion of rich contextual information, structured in the form of a knowledge graph. This work investigates the application of GNNs to the task of content recommendation. In particular, the recommendation of learning content to employees is investigated on a real world dataset and compared against a traditional factorization based approach to recommender systems, Factorization Machines.
+
+For the task at hand, the process of how the heterogeneous knowledge graph is constructed is described. The graph provides the GNN with the user-learning context, including jobs, supervisors, organizations and an already existing skill subgraph. The GNN-based recommender system consists of a TransE Knowledge Graph Embedding-head combined with the Heterogeneous Graph Transformer. For this system, the recommendation task is defined as a link prediction problem predicting the implicit user feedback of user-learning completion events. 
+
+For a  fair comparison, structural graph features are computed. These, as well as other continuous numerical features are added to the Factorization Machine baseline through additional neural network layers. It is shown that the GNN-based approach outperforms the baselines, achieving a test MRR of 0.524 compared to the best baseline's MRR of 0.074. These results demonstrate the potential of GNNs for personalized and context-aware learning recommendations. While this study is centered on the recommendation task, the approach can be extended to general link prediction as well, which is briefly investigated. This enables the learning of node embeddings for all entities in the graph. The embeddings can then find further application in downstream tasks.
+
+
+
+
+
+

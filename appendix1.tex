@@ -1,0 +1,93 @@
+% !TEX root =  master.tex
+
+\chapter{TF-IDF Score Examples}
+\label{ch:tfidfappendixw}
+\begin{table}[htbp]
+\centering
+\setlength\tabcolsep{3pt}
+\begin{tabular}{|c|c|}
+\hline
+Profession & TF-IDF score of "Python" * 1000 \\
+\hline
+(Excavating and Loading Machine and & (45.075)\\ Dragline Operators, Surface Mining) &  \\
+Mathematicians & 6.480 \\
+Data Scientists & 5.581 \\
+Bioinformatics Technicians & 5.347 \\
+Automotive Engineers & 5.214 \\
+Blockchain Engineers & 4.407 \\
+Digital Forensics Analysts & 4.265 \\
+Computer and Information Research Scientists & 4.165 \\
+Bioinformatics Scientists & 3.889 \\
+Financial Quantitative Analysts & 3.319 \\
+
+
+\hline
+Skill & TF-IDF score * 1000 for \\
+& "Front End Web Developers" \\
+\hline
+javascript & 21.674 \\
+front-end & 18.724 \\
+css & 17.879 \\
+design & 17.079 \\
+(developer) & (16.766) \\
+(experience) & (14.883) \\
+development & 14.610 \\
+web developer & 13.645 \\
+html & 13.269\\
+(or) & (9.889) \\
+frameworks & 8.534 \\
+ui & 8.324 \\
+
+\hline
+\end{tabular}
+\caption[Term Frequency Inverse Document Frequency examples]{
+a) The skill importance of the skill "Python" for different professions cal-
+culated with the method introduced in the paper. The first entry may
+represent an outlier caused by a small number of job descriptions with
+regard to the profession. b) The ten first skill importances for the profession "Front End Web Developers". The quality of the TF-IDF results heavily depend on a curated list of skills, such that terms like "development", "experience" or "or" will not be included.
+}
+
+\label{tab:tfidf}
+\end{table}
+
+
+\chapter{Example of recommended Content}
+\label{ch:recommendedcontent}
+\begin{table}[htbp]
+\centering
+\setlength\tabcolsep{3pt}
+\begin{tabular}{|c|p{15cm}|}
+\hline
+& Job Title of the Person:\\
+&Quality Control Analysts, Quality Assurance Associate\\
+\hline
+Rank & Learning \\
+\hline
+\textbf{\textit{1}} & \textit{\textbf{Increasing Collaboration on Your Team}}\\
+  & If you want to go fast, go alone—but for organizations to go far, they must go together. In this powerful course from [name], PhD, you can learn how to improve and encourage collaboration on your teams. ... \\
+2 & [Translated, Sp.] \textit{Agile project management}\\
+ & In this course, we will explore the Agile features built into Project Professional. If your projects often end up being a combination of Agile and traditional waterfall, you can apply Agile techniques ...\\
+3 & [Translated, Sp.] \textit{Business English: How to Write Successful Business Emails}\\
+  & Would you like to write clear, effective and professional English emails that get results? If you want to avoid misunderstandings...\\
+4 & \textit{Navigating Politics as a Senior Leader} \\
+ & View [names]'s [website] Newsletter\\
+ & No organization is completely devoid of political intrigue. Whether it's resource hoarding, manipulative behavior, or unproductive alliance building...\\
+5 & \textit{SCRUM: Roles} \\
+6 & \textit{Excel Business Intelligence: Power Query}\\
+7 & \textit{The Non-Technical Skills of Effective Data Scientists} \\
+8 & [Internal] \\
+9 & \textit{How to Give Negative Feedback to Senior Colleagues}\\
+10 & \textit{Excel Business Intelligence: Data Modeling 101}\\
+  
+
+
+
+\hline
+\end{tabular}
+\caption[Course recommendation by the HGT]{
+Course recommendation by the HGT, the bold course is the ground truth. 
+}
+
+\label{tab:content1}
+\end{table}
+

@@ -1,0 +1,31 @@
+% !TEX root =  master.tex
+\chapter{Introduction}
+
+
+% \nocite{*}
+
+%\section{Motivation}
+The vast amounts of options which users are confronted with on e-commerce or online-content sites creates the demand for effective recommender systems (RS) \parencite{lu2012recommender}. These systems provide user-specific item recommendations. 
+Therefore, sales or user satisfaction is increased, since more relevant items can be recommended to the users. Traditional collaborative filtering-based approaches were popularized by contests such as the Netflix Prize \parencite{Bennett2007TheNP} where the task is to recommend movies to users. These approaches utilize past knowledge about other users' preferences to create recommendations for specific users. Established methods to solving the problem include matrix factorization, in which the user-item interaction matrix is decomposed into latent user and item vectors. A frequent problem for such systems is the cold-start problem, in which not enough data about new users are available to create accurate recommendations.
+
+Recently, Knowledge Graph-based approaches \parencite{guo2020survey} have been used to alleviate this problem and create better recommendations respecting the broader user context when generating recommendations. \acp{kg} can combine data from different sources to create more elaborate user and item descriptions. They connect concepts or entities through their relationships, whereby abstract and concrete knowledge can be combined in a single graph. 
+
+In the current work, a graph is constructed which relates employees, their jobs, supervisors, organizations, and learning-content they have consumed. The graph is augmented by an already existing skill graph which relates skills with each other and is derived from \ac{s-bert} sentence embeddings \parencite{Reimers2019SentenceBERTSE}.
+In particular, the current work investigates the use of \acp{gnn} in conjunction with knowledge graphs to generate learning-content recommendations for users. The \ac{gnn} can learn the correct aggregation strategy of the context given by relationships between entities, where otherwise manual feature engineering would be required.
+
+\newpage
+The key contributions include:
+\begin{itemize}
+\item The creation of a heterogeneous knowledge graph which incorporates real world data from SAP's learning system as well as the job- and skill-related context of users. This includes a description of practical, hardware-bound considerations, as well as the introduction of a Term Frequency Inverse Document Frequency-based method to extract skill-job edges from 150 million job descriptions.
+\item The application of a \ac{gnn}-based approach for the recommendation task. In particular the \acp{hgt} \parencite{hu2020heterogeneous} is utilized in conjunction with the Knowlede Graph Embedding (KGE) method TransE \parencite{bordes2013translating}. The task at hand is to predict the link between users and the learning content in the graph. The \ac{gnn} model is able to learn user and item representations on the graph, respecting the heterogeneous nature of relationships and entities.
+\item The comparison of the \ac{gnn}-based approach with a CF-based method, namely \acp{fm} \parencite{rendle2010factorization} on the performance on the real world data. For a fairer comparision, the FM is combined with a basic neural network which can process graph structural features, since the \ac{gnn} is able to directly learn on the graph.
+
+
+
+\end{itemize}
+
+Further analyses include the examination of varying performance in the multi-hop dimension of the GNN, as depending on the depth of the model, it is able to access different information on the graph. 
+Also, the general performance when trained on the multi-objective of predicting links of all link types in the graph is explored, to investigate the usability of entity embeddings for downstream tasks.
+
+In the following pages, Chapter \ref{ch:preliminaries} introduces the general context of recommender systems and graphs. An overview is provided over embedding based methods for graphs, \ac{gnn} architectures and \ac{gnn} training. Chapter \ref{ch:relatedwork} compares the current work to similar efforts and describes the used \ac{gnn}, the HGT in detail. Chapter \ref{ch:methodology} explains the graph construction, as well as the experimental setup to compare FMs with the \ac{gnn}-based approach, of which the results are presented in Chapter \ref{ch:experimental} and discussed in Chapter \ref{ch:discussion}.
+
